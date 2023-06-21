@@ -1,8 +1,8 @@
 package mock
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.sample.data.AnimalDataSource
-import com.sample.dto.Animal
 import io.micronaut.context.annotation.Context
 import io.micronaut.context.annotation.Factory
 import io.micronaut.context.annotation.Replaces
@@ -22,12 +22,7 @@ class MockFactory(
             every {
                 it.get()
             } answers {
-                val file = File("src/test/resources/animals.json")
-                val rawList = objectMapper.readValue(file, List::class.java)
-                val animals = rawList.map {
-                    objectMapper.readValue(objectMapper.writeValueAsString(it), Animal::class.java)
-                }.toList()
-                animals
+                objectMapper.readValue(File("src/test/resources/animals.json"))
             }
         }
     }
