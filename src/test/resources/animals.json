@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "Shark",
+    "bioClass": "FISH"
+  },
+  {
+    "id": 2,
+    "name": "Fox",
+    "bioClass": "MAMMAL"
+  },
+  {
+    "id": 3,
+    "name": "Eagle",
+    "bioClass": "BIRD"
+  },
+  {
+    "id": 4,
+    "name": "Shark",
+    "bioClass": "FISH"
+  },
+  {
+    "id": 5,
+    "name": "Snake",
+    "bioClass": "REPTILE"
+  },
+  {
+    "id": 6,
+    "name": "Frog",
+    "bioClass": "AMPHIBIAN"
+  },
+  {
+    "id": 7,
+    "name": "Crab",
+    "bioClass": "ARTHROPOD"
+  },
+  {
+    "id": 8,
+    "name": "Peacock",
+    "bioClass": "BIRD"
+  },
+  {
+    "id": 9,
+    "name": "Dog",
+    "bioClass": "MAMMAL"
+  },
+  {
+    "id": 10,
+    "name": "Cat",
+    "bioClass": "MAMMAL"
+  }
+]
