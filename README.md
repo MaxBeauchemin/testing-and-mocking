@@ -1,16 +1,14 @@
-## Micronaut 3.9.3 Documentation
+# Testing and Mocking
 
-- [User Guide](https://docs.micronaut.io/3.9.3/guide/index.html)
-- [API Reference](https://docs.micronaut.io/3.9.3/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/3.9.3/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+## Description
 
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
-- [GraalVM Gradle Plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
-- [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
-## Feature http-client documentation
+This project is intended to serve as a very basic introduction to Feature Testing your code and the powerful idea of Mocking your dependencies in order to isolate the logic you are testing
 
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+## Important Files
 
-
+- `src/main/kotlin/com/sample/`
+  - `/data/AnimalDataSource` - The real code for the Animal Data Source which would typically connect to a remote server to obtain this data
+  - `/service/AnimalService` - The implementation of our logic that interacts with the `AnimalDataSource`
+- `src/test/kotlin/`
+  - `com/sample/AnimalTests` - All the tests written to verify the functionality of the `AnimalService`
+  - `mock/MockFactory` - The "Fake" implementation of the `AnimalDataSource` so that our tests aren't dependent on a remote server
