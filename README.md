@@ -12,3 +12,19 @@ This project is intended to serve as a very basic introduction to Feature Testin
 - `src/test/kotlin/`
   - `com/sample/AnimalTests` - All the tests written to verify the functionality of the `AnimalService`
   - `mock/MockFactory` - The "Fake" implementation of the `AnimalDataSource` so that our tests aren't dependent on a remote server
+
+## Project Setup
+
+1. Clone the repository to your machine
+2. Make sure you have Java 17 installed
+   3. `curl -s "https://get.sdkman.io" | bash`
+   4. `source "$HOME/.sdkman/bin/sdkman-init.sh"`
+   5. `sdk install java`
+   6. `export JAVA_HOME='/Users/{you}/.sdkman/candidates/java/current'`
+
+## Running Tests
+
+CD into the root directory of the project and run the following command
+`./gradlew build koverReport`
+
+If tests pass, you should see a Code Coverage report available for you to see which lines of code were tested
