@@ -9,8 +9,19 @@ import jakarta.inject.Singleton
 class AnimalService(
     private val animalDataSource: AnimalDataSource
 ) {
-    fun getAllAnimals(): List<Animal> = animalDataSource.get()
-    fun getAnimalById(id: Int): Animal? = animalDataSource.get().firstOrNull()
-    fun getAnimalsByPartialName(namePart: String): List<Animal> = animalDataSource.get()
-    fun getAnimalsByBioClass(bioClass: BioClass): List<Animal> = animalDataSource.get()
+    fun getAllAnimals(): List<Animal> {
+        return animalDataSource.get()
+    }
+
+    fun getAnimalById(id: Int): Animal? {
+        return animalDataSource.get().firstOrNull()
+    }
+
+    fun getAnimalsByPartialName(namePart: String): List<Animal> {
+        return animalDataSource.get()
+    }
+
+    fun getAnimalsByBioClass(bioClass: BioClass): List<Animal> {
+        return animalDataSource.get()
+    }
 }
