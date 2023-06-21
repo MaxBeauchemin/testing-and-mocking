@@ -16,11 +16,11 @@ This project is intended to serve as a very basic introduction to Feature Testin
 ## Project Setup
 
 1. Clone the repository to your machine
-2. Make sure you have Java 17 installed
-   3. `curl -s "https://get.sdkman.io" | bash`
-   4. `source "$HOME/.sdkman/bin/sdkman-init.sh"`
-   5. `sdk install java`
-   6. `export JAVA_HOME='/Users/{you}/.sdkman/candidates/java/current'`
+2. Install Java 17
+   - `curl -s "https://get.sdkman.io" | bash`
+   - `source "$HOME/.sdkman/bin/sdkman-init.sh"`
+   - `sdk install java`
+   - `export JAVA_HOME='/Users/{you}/.sdkman/candidates/java/current'`
 
 ## Running Tests
 
