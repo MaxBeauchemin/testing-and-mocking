@@ -25,6 +25,6 @@ This project is intended to serve as a very basic introduction to Feature Testin
 ## Running Tests
 
 CD into the root directory of the project and run the following command
-`./gradlew build koverReport`
+`./gradlew build koverReport --no-build-cache`
 
 If tests pass, you should see a Code Coverage report available for you to see which lines of code were tested
