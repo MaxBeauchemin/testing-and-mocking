@@ -4,6 +4,9 @@ import com.sample.service.AnimalService
 import io.kotest.assertions.fail
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 
 @MicronautTest
@@ -16,10 +19,16 @@ class AnimalTests(
         response.shouldHaveSize(10)
     }
     "getAnimalById(id: Int) - Animal with Id Exists" {
-        fail("NOT IMPLEMENTED")
+        val response = animalService.getAnimalById(6)
+
+        response.shouldNotBeNull().also { animal ->
+            animal.name shouldBe "Frog"
+        }
     }
     "getAnimalById(id: Int) - Animal with Id Doesn't Exist" {
-        fail("NOT IMPLEMENTED")
+        val response = animalService.getAnimalById(1000)
+
+        response.shouldBeNull()
     }
     "getAnimalById(id: Int) - Negative Id Provided" {
         fail("NOT IMPLEMENTED")
