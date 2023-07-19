@@ -51,36 +51,43 @@ class AnimalTests(
     "getAnimalsByBioClass(bioClass: BioClass) - No Results" {
         fail("NOT IMPLEMENTED")
     }
-    "getAllAnimals() - Retry on Timeout" {
-        // Override The Mock
 
-        val successfulGetResponse = animalDataSource.get()
-        var invokeCount = 0
+    // Override The Mock
 
-        every {
-            animalDataSource.get()
-        } answers {
-            invokeCount++
-            if (invokeCount >= 3) {
-                successfulGetResponse
-            } else {
-                throw TimeoutException()
-            }
+    val successfulGet = animalDataSource.get()
+    var getInvokeCount = 0
+    var timeoutCount = 0
+    beforeTest {
+        getInvokeCount = 0
+    }
+
+    every {
+        animalDataSource.get()
+    } answers {
+        getInvokeCount++
+        if (getInvokeCount > timeoutCount) {
+            successfulGet
+        } else {
+            throw TimeoutException()
         }
+    }
+
+    "getAllAnimals() - Retry on Timeout" {
+        timeoutCount = 2 // Timeout twice and then succeed
 
         val response = animalService.getAllAnimals()
 
         response.shouldHaveSize(10)
+
+        getInvokeCount shouldBe 3
     }
     "getAllAnimals() - Retry maximum 3 times" {
-        // Override The Mock (again)
-
-        every {
-            animalDataSource.get()
-        } throws TimeoutException()
+        timeoutCount = 3 // Timeout three times
 
         shouldThrow<RetryException> {
             animalService.getAllAnimals()
         }
+
+        getInvokeCount shouldBe 3
     }
 })
