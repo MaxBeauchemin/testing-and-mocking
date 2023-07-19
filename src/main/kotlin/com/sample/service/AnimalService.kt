@@ -10,6 +10,8 @@ import jakarta.inject.Singleton
 class AnimalService(
     private val animalDataSource: AnimalDataSource
 ) {
+    private val maxRetryCount = 3
+
     fun getAllAnimals(): List<Animal> {
         return animalDataSource.retryableGet()
     }
@@ -27,11 +29,11 @@ class AnimalService(
     }
 
     private fun AnimalDataSource.retryableGet(): List<Animal> {
-        repeat(3) {
+        repeat(maxRetryCount) {
             kotlin.runCatching {
                 return get()
             }
         }
-        throw RetryException("Retried 3 times")
+        throw RetryException("Retried $maxRetryCount times")
     }
 }
