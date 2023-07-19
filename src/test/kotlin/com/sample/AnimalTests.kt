@@ -1,17 +1,23 @@
 package com.sample
 
+import com.sample.data.AnimalDataSource
 import com.sample.service.AnimalService
 import io.kotest.assertions.fail
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
+import io.micronaut.retry.exception.RetryException
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+import io.mockk.every
+import java.util.concurrent.TimeoutException
 
 @MicronautTest
 class AnimalTests(
-    private val animalService: AnimalService
+    private val animalService: AnimalService,
+    private val animalDataSource: AnimalDataSource
 ) : StringSpec({
     "getAllAnimals()" {
         val response = animalService.getAllAnimals()
@@ -44,5 +50,37 @@ class AnimalTests(
     }
     "getAnimalsByBioClass(bioClass: BioClass) - No Results" {
         fail("NOT IMPLEMENTED")
+    }
+    "getAllAnimals() - Retry on Timeout" {
+        // Override The Mock
+
+        val successfulGetResponse = animalDataSource.get()
+        var invokeCount = 0
+
+        every {
+            animalDataSource.get()
+        } answers {
+            invokeCount++
+            if (invokeCount >= 3) {
+                successfulGetResponse
+            } else {
+                throw TimeoutException()
+            }
+        }
+
+        val response = animalService.getAllAnimals()
+
+        response.shouldHaveSize(10)
+    }
+    "getAllAnimals() - Retry maximum 3 times" {
+        // Override The Mock (again)
+
+        every {
+            animalDataSource.get()
+        } throws TimeoutException()
+
+        shouldThrow<RetryException> {
+            animalService.getAllAnimals()
+        }
     }
 })
