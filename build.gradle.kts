@@ -43,6 +43,7 @@ kover {
     filters {
         classes {
             includes += listOf("com.sample.*")
+            excludes += listOf("com.sample.ApplicationKt")
         }
     }
 }
