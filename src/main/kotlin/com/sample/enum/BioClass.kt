@@ -7,5 +7,6 @@ enum class BioClass {
     CEPHALOPOD,
     FISH,
     MAMMAL,
-    REPTILE
+    REPTILE,
+    INSECT
 }

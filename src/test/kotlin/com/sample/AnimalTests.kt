@@ -13,6 +13,7 @@ import io.micronaut.retry.exception.RetryException
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.mockk.every
 import java.util.concurrent.TimeoutException
+import com.sample.enum.BioClass
 
 @MicronautTest
 class AnimalTests(
@@ -22,13 +23,13 @@ class AnimalTests(
     "getAllAnimals()" {
         val response = animalService.getAllAnimals()
 
-        response.shouldHaveSize(10)
+        response.shouldHaveSize(13)
     }
     "getAnimalById(id: Int) - Animal with Id Exists" {
-        val response = animalService.getAnimalById(6)
+        val response = animalService.getAnimalById(7)
 
         response.shouldNotBeNull().also { animal ->
-            animal.name shouldBe "Frog"
+            animal.name shouldBe "Crab"
         }
     }
     "getAnimalById(id: Int) - Animal with Id Doesn't Exist" {
@@ -37,19 +38,41 @@ class AnimalTests(
         response.shouldBeNull()
     }
     "getAnimalById(id: Int) - Negative Id Provided" {
-        fail("NOT IMPLEMENTED")
+        val response = animalService.getAnimalById(-1)
+
+        response.shouldBeNull()
+    }
+    "getAnimalsByPartialName(namePart: String) - One Results" {
+        val response = animalService.getAnimalsByPartialName("roach")
+
+        response.shouldHaveSize(1)
+        response.first().name shouldBe "Cockroach"
     }
     "getAnimalsByPartialName(namePart: String) - Some Results" {
-        fail("NOT IMPLEMENTED")
+        val response = animalService.getAnimalsByPartialName("o")
+
+        response.shouldHaveSize(6)
     }
     "getAnimalsByPartialName(namePart: String) - No Results" {
-        fail("NOT IMPLEMENTED")
+        val response = animalService.getAnimalsByPartialName("z")
+
+        response.shouldHaveSize(0)
+    }
+    "getAnimalsByPartialName(namePart: String) - One Results - Case Insentitive" {
+        val response = animalService.getAnimalsByPartialName("ROACH")
+
+        response.shouldHaveSize(1)
+        response.first().name shouldBe "Cockroach"
     }
     "getAnimalsByBioClass(bioClass: BioClass) - Some Results" {
-        fail("NOT IMPLEMENTED")
+        val response = animalService.getAnimalsByBioClass(BioClass.MAMMAL)
+
+        response.shouldHaveSize(5)
     }
     "getAnimalsByBioClass(bioClass: BioClass) - No Results" {
-        fail("NOT IMPLEMENTED")
+        val response = animalService.getAnimalsByBioClass(BioClass.CEPHALOPOD)
+
+        response.shouldHaveSize(0)
     }
 
     // Override The Mock
@@ -77,7 +100,7 @@ class AnimalTests(
 
         val response = animalService.getAllAnimals()
 
-        response.shouldHaveSize(10)
+        response.shouldHaveSize(13)
 
         getInvokeCount shouldBe 3
     }

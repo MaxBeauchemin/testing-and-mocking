@@ -17,15 +17,16 @@ class AnimalService(
     }
 
     fun getAnimalById(id: Int): Animal? {
-        return animalDataSource.retryableGet().firstOrNull()
+        return animalDataSource.retryableGet().firstOrNull { a -> a.id == id }
     }
 
     fun getAnimalsByPartialName(namePart: String): List<Animal> {
-        return animalDataSource.retryableGet()
+        val lowerNamePart = namePart.lowercase()
+        return animalDataSource.retryableGet().filter { a -> a.name.lowercase().contains(lowerNamePart) }
     }
 
     fun getAnimalsByBioClass(bioClass: BioClass): List<Animal> {
-        return animalDataSource.retryableGet()
+        return animalDataSource.retryableGet().filter { a -> a.bioClass == bioClass }
     }
 
     private fun AnimalDataSource.retryableGet(): List<Animal> {

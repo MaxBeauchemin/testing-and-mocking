@@ -48,5 +48,20 @@
     "id": 10,
     "name": "Cat",
     "bioClass": "MAMMAL"
+  },
+  {
+    "id": 11,
+    "name": "Cockroach",
+    "bioClass": "INSECT"
+  },
+  {
+    "id": 12,
+    "name": "Capybara",
+    "bioClass": "MAMMAL"
+  },
+  {
+    "id": 13,
+    "name": "Bat",
+    "bioClass": "MAMMAL"
   }
 ]
